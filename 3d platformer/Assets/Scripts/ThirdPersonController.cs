@@ -34,7 +34,7 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private float inputOrbitScale = 10f;
     [SerializeField] private float followSpeed = 4f;
     [SerializeField] private float turnAngularSpeed = 6f;
-    [SerializeField] private float jumpImpulse = 5f;
+    [SerializeField] private float jumpImpulse = 10f;
     [SerializeField] private float movementLerpSpeed = 17.5f;
 
     [Header("Ground Check")]
@@ -111,7 +111,12 @@ public class ThirdPersonController : MonoBehaviour
     {
         // fix: if the player presses the jump key many times too quickly, this will trigger many jumps
         if(jumpedThisFrame = inputJump && isGrounded)
+        {
+            Vector3 vel = character.velocity;
+            vel.y = 0;
+            character.velocity = vel;
             character.AddForce(Vector3.up * jumpImpulse, ForceMode.Impulse);
+        }
     }
 
     private void Orbit(float delta)
