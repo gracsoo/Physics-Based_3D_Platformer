@@ -4,6 +4,7 @@ public class ThirdPersonController : MonoBehaviour
 {
     [SerializeField] new private Camera camera;
     [SerializeField] private Rigidbody character;
+    public Rigidbody innerCharacter;
     [SerializeField] private Animator animator;
 
     [Header("Animator Parameters")]
@@ -47,6 +48,7 @@ public class ThirdPersonController : MonoBehaviour
     private bool isGrounded;
     private bool isFreeFalling;
     private float speed;
+    // private bool isRagdoll = false;
 
     private void Awake()
     {
@@ -59,6 +61,10 @@ public class ThirdPersonController : MonoBehaviour
         UpdateAnimatorParameters();
         isGrounded = CheckGround();
         isFreeFalling = CheckFreeFalling();
+        if(isFreeFalling)
+        {
+           animator.enabled = false;
+        }
     }
 
     private void ReadInputs()

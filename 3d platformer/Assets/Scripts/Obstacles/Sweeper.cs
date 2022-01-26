@@ -4,17 +4,36 @@ using UnityEngine;
 
 public class Sweeper : MonoBehaviour
 {
-    public float min=2f;
-    public float max=3f;
+    public string axis;
+    public float min;
+    public float max;
+    public bool moveRightFirst;
 
     void Start () 
     {
-        min = transform.position.z;
-        max = transform.position.z + 3f;
+        if(axis == "x")
+        {
+            min = min + transform.position.x;
+            max = max + transform.position.x;
+        }
+        
+        if(axis == "z")
+        {
+            min = min + transform.position.z;
+            max = max + transform.position.z;
+        }
    
     }
     void Update () 
     {
-        transform.position = new Vector3(transform.position.x , transform.position.y, Mathf.PingPong(Time.time * 2, max - min) + min);
+        if(axis == "x")
+            transform.position = new Vector3(Mathf.PingPong(Time.time * 4, max - min) + min , transform.position.y, transform.position.z);
+        
+        int temp = 1;
+        if(axis == "z"){
+            if(moveRightFirst)
+                temp = -1;
+            transform.position = new Vector3(transform.position.x , transform.position.y, temp*Mathf.PingPong(Time.time * 4, max - min) + min);
+        }   
     }
 }
